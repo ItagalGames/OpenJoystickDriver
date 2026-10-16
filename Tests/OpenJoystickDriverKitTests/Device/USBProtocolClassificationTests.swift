@@ -208,6 +208,20 @@ struct USBProtocolClassificationTests {
   }
 
   @Test
+  func redOctaneXplorerRequestsConfigurationOneBeforeClaim() {
+    let registry = ParserRegistry()
+    let xplorer = DeviceIdentifier(vendorID: 0x1430, productID: 0x4748)
+    let profile = registry.transportProfile(for: xplorer)
+    let options = USBTransportOpenOptions(transportProfile: profile)
+
+    #expect(registry.parserName(for: xplorer) == "XUSB")
+    #expect(registry.rawUSBProfileIdentifiers().contains(xplorer))
+    #expect(profile.needsSetConfiguration)
+    #expect(options.configurationValue == 1)
+    #expect(options.interfaceNumber == 0)
+  }
+
+  @Test
   func exactCatalogAdmissionSetRemainsCatalogOwned() {
     let registry = ParserRegistry()
     let known = DeviceIdentifier(vendorID: 0x045E, productID: 0x028E)

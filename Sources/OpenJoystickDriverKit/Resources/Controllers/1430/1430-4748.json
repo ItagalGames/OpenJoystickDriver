@@ -6,5 +6,8 @@
   "protocol": {
     "driver": "XUSB",
     "variant": "xbox360"
+  },
+  "usb": {
+    "configuration": "set1-before-claim"
   }
 }
